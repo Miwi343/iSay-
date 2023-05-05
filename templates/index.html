@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset=utf-8> 
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/style.css') }}">
+        <link rel="icon" href="{{ url_for('static',filename='img/pencil_icon.png') }}">
+        <title>iSay!</title> 
+    </head>
+
+    <body>
+        <div id="left-side-bar"></div>
+
+        <div id="middle-side-bar">
+            <h1 id="title">Test Your Spelling!</h1>
+            
+            
+            <form action="/play-sound" method="POST">
+                <input type="submit" value="Click for a new word!" id="soundbutton" />
+            </form>
+
+            <div class="cursor">
+                <input type="text" id="input" placeholder="Type here...">
+                <i></i>
+            </div>
+        </div>
+
+        <div id="right-side-bar">
+            <h3>Choose Grade Level:</h3>
+            <button id="easy">K-2</button>
+            <button id="medium">3-4</button>
+            <button id="hard">5-6</button>
+        </div>
+
+        <script>
+            addEventListener("DOMContentLoaded", function(event) {
+
+                var soundButton = document.getElementById("soundbutton");
+                var input = document.getElementById("input");
+                var currentIndex = null;
+
+                // when user clicks the sound button, make an AJAX request to the server to play the sound
+                soundButton.addEventListener("click", function(event) {
+                    event.preventDefault();
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('POST', '/play-sound', true);
+                    xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+                    xhr.onload = function() {
+                        if (xhr.status === 200) {
+                            currentIndex = xhr.response.index;
+                            var audio = new Audio('sounds/' + xhr.response.word + '.mp3');
+                            audio.play();
+                        }
+                    };
+                    xhr.send();
+                });
+
+                // add event listeners for each of the level buttons in the left side bar. If clicked, 
+                // set all of the buttons to the default color and then set the clicked button to a white color
+                // and make an AJAX request to the server to let it know which level has been selected.
+                var easyButton = document.getElementById("easy");
+                var mediumButton = document.getElementById("medium");
+                var hardButton = document.getElementById("hard");
+                easyButton.addEventListener("click", function(event) {
+                    event.preventDefault();
+                    easyButton.style.backgroundColor = "white";
+                    mediumButton.style.backgroundColor = "#f6d8d8";
+                    hardButton.style.backgroundColor = "#f6d8d8";
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('POST', '/set-level', true);
+                    xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+                    xhr.onload = function() {
+                        if (xhr.status === 200) {
+                            console.log(xhr.response.message);
+                        }
+                    };
+                    xhr.send(JSON.stringify({level: "easy"}));
+                });
+                mediumButton.addEventListener("click", function(event) {
+                    event.preventDefault();
+                    easyButton.style.backgroundColor = "#f6d8d8";
+                    mediumButton.style.backgroundColor = "white";
+                    hardButton.style.backgroundColor = "#f6d8d8";
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('POST', '/set-level', true);
+                    xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+                    xhr.onload = function() {
+                        if (xhr.status === 200) {
+                            console.log(xhr.response.message);
+                        }
+                    };
+                    xhr.send(JSON.stringify({level: "medium"}));
+                });
+                hardButton.addEventListener("click", function(event) {
+                    event.preventDefault();
+                    easyButton.style.backgroundColor = "#f6d8d8";
+                    mediumButton.style.backgroundColor = "#f6d8d8";
+                    hardButton.style.backgroundColor = "white";
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('POST', '/set-level', true);
+                    xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+                    xhr.onload = function() {
+                        if (xhr.status === 200) {
+                            console.log(xhr.response.message);
+                        }
+                    };
+                    xhr.send(JSON.stringify({level: "hard"}));
+                });
+
+                // when user presses enter, check if the input matches the current word
+                input.addEventListener("keyup", function(event) {
+                    if (event.code === 'Enter') {
+                        var word = input.value.trim();
+                        if (word !== '') {
+                            var xhr = new XMLHttpRequest();
+                            xhr.open('POST', '/check-word', true);
+                            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded;charset=UTF-8');
+                            xhr.onload = function() {
+                                if (xhr.status === 200) {
+                                    //alert(xhr.response.message);
+                                    console.log(xhr.response.message);
+                                }
+                            };
+                            xhr.send('word=' + encodeURIComponent(word) + '&index=' + encodeURIComponent(currentIndex));
+                        }
+                        input.value = '';
+                    }
+                });
+            });
+
+        </script>
+
+    </body>
+</html>
