@@ -15,6 +15,12 @@ body {
 
 #left-side-bar {
     width: 15%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    text-align: center;
 }
 #middle-side-bar {
     width: 70%;
@@ -31,6 +37,7 @@ body {
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+    text-align: center;
 }
 
 
@@ -103,7 +110,13 @@ h3 {
 	to { opacity: 0; }
 }
 
+a {
+    color: #f6d8d8;
+    font-size: 18px;
+    font-family: 'Andale Mono', 'Monaco', 'Roboto', 'Monospace';
 
+    margin-top: 25px;
+}
 
 #easy, #medium, #hard {
     background-color: #f6d8d8;
