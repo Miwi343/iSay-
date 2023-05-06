@@ -7,7 +7,7 @@ import json
 app = Flask(__name__)
 
 # List of simple words kindergartners should be learning
-words = ['apple', 'ball', 'cat', 'dog', 'fish', 'play', 'green', 'blue', 'orange', 
+words = [ 'apple', 'ball', 'cat', 'dog', 'fish', 'play', 'green', 'blue', 'orange', 
         'down', 'up', 'sad', 'happy', 'brown', 'his', 'her', 'mine', 'myself', 'cool',
         'nice', 'mom', 'dad', 'sister', 'brother', 'pretty', 'please', 'thanks', 'new', 
         'like', 'car', 'phone', 'school', 'teacher', 'friend', 'fun', 'run', 'jump', 'walk',
@@ -16,7 +16,10 @@ words = ['apple', 'ball', 'cat', 'dog', 'fish', 'play', 'green', 'blue', 'orange
         'football', 'novel', 'understand', 'technology', 'student', 'association', 'midnight', 'neighbor',
         'hi', 'far', 'cat', 'fat', 'fee', 'tie', 'she', 'car', 'play', 'confirm', 'tap', 'hydrogen', 'oxygen',
         'biology', 'russian', 'us', 'would', 'could', 'should', 'can', 'will', 'may', 'might', 'must', 
-        'shall', 'ought', 'need', 'dare', 'used', 'to', 'be', 'am', 'is', 'are', 'was', 'were', 'being'] 
+        'shall', 'ought', 'need', 'dare', 'used', 'to', 'be', 'am', 'is', 'are', 'was', 'were', 'being'
+        'apparent', 'diminish', 'controversy', 'frigid', 'flammable', 'chronological', 'impair',
+        'waver', 'sufficient', 'symbol', 'unique', 'variable', 'widespread', 'youth', 'zeal', 'zest',
+        'attach', 'whisper', 'neighbor', 'cities', 'common', 'divide', 'multiply' ] 
 random_index = 0
 lower_bounds = 2
 upper_bounds = 3
@@ -85,10 +88,10 @@ def set_level():
         upper_bounds = 3
     elif data['level'] == "medium":
         lower_bounds = 4
-        upper_bounds = 5
+        upper_bounds = 6
     elif data['level'] == "hard":
-        lower_bounds = 6
-        upper_bounds = 10
+        lower_bounds = 7
+        upper_bounds = 15
     
 
 
